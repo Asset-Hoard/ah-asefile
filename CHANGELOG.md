@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0 - 2026-05-29
+
+- Add support for Gamma and ICC color profiles in Aseprite files.
+
 ## 0.3.8
 
 - Parse `repeat` property of a tag. [#23]

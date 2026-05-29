@@ -6,6 +6,8 @@
 
 Load [Aseprite](https://www.aseprite.org/) files directly from their binary format — no JSON export step required. Fast enough to load assets at game boot or wire into an asset pipeline.
 
+Used primarily in [AssetHoard](https://assethoard.com) to load Aseprite assets, including animations. 
+
 Fork of [`alpine-alpaca/asefile`](https://github.com/alpine-alpaca/asefile), maintained here because upstream is inactive. Adds gamma/ICC color profile support and updated dependencies.
 
 ## Install
