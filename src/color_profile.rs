@@ -1,17 +1,27 @@
 use crate::{reader::AseReader, AsepriteParseError, Result};
 
+/// Color profile information attached to an Aseprite file.
 #[derive(Debug)]
 pub struct ColorProfile {
+    /// Which color profile kind this file uses.
     pub profile_type: ColorProfileType,
+    /// Fixed gamma value, if the file specifies one. Encoded as a 32.16 fixed-point
+    /// value in the file; exposed here already converted to `f64`.
     pub fixed_gamma: Option<f64>,
+    /// Raw ICC profile bytes, present only when `profile_type` is
+    /// [`ColorProfileType::ICC`].
     pub icc_profile: Option<Vec<u8>>,
 }
 
+/// Kind of color profile embedded in the file.
 #[allow(clippy::upper_case_acronyms)]
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ColorProfileType {
+    /// No color profile specified.
     None,
+    /// Standard sRGB color space.
     Srgb,
+    /// An embedded ICC profile; the raw bytes are in [`ColorProfile::icc_profile`].
     ICC,
 }
 
