@@ -1,6 +1,6 @@
 # ah-asefile
 
-[![Build status](https://github.com/Asset-Hoard/ah-asefile/actions/workflows/rust.yml/badge.svg)](https://github.com/Asset-Hoard/ah-asefile/actions/)
+[![Build](https://github.com/Asset-Hoard/ah-asefile/actions/workflows/rust.yml/badge.svg)](https://github.com/Asset-Hoard/ah-asefile/actions/workflows/rust.yml)
 [![crates.io](https://img.shields.io/crates/v/ah-asefile.svg)](https://crates.io/crates/ah-asefile)
 [![Documentation](https://docs.rs/ah-asefile/badge.svg)](https://docs.rs/ah-asefile)
 
