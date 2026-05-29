@@ -3,7 +3,7 @@
 //
 use std::path::Path;
 
-use asefile::AsepriteFile;
+use ah_asefile::AsepriteFile;
 use image::{self, ImageFormat};
 
 fn main() {

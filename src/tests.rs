@@ -629,7 +629,11 @@ fn srgb_linear_gamma() {
     let profile = f.color_profile().expect("Expected a color profile");
     assert_eq!(profile.profile_type, ColorProfileType::Srgb);
     let gamma = profile.fixed_gamma.expect("Expected fixed gamma");
-    assert!((gamma - 1.0).abs() < 1e-6, "Expected gamma 1.0, got {}", gamma);
+    assert!(
+        (gamma - 1.0).abs() < 1e-6,
+        "Expected gamma 1.0, got {}",
+        gamma
+    );
     assert!(profile.icc_profile.is_none());
 }
 
@@ -639,7 +643,11 @@ fn srgb_gamma22() {
     let profile = f.color_profile().expect("Expected a color profile");
     assert_eq!(profile.profile_type, ColorProfileType::Srgb);
     let gamma = profile.fixed_gamma.expect("Expected fixed gamma");
-    assert!((gamma - 2.2).abs() < 1e-4, "Expected gamma 2.2, got {}", gamma);
+    assert!(
+        (gamma - 2.2).abs() < 1e-4,
+        "Expected gamma 2.2, got {}",
+        gamma
+    );
 }
 
 #[test]
@@ -648,7 +656,11 @@ fn icc_with_gamma() {
     let profile = f.color_profile().expect("Expected a color profile");
     assert_eq!(profile.profile_type, ColorProfileType::ICC);
     let gamma = profile.fixed_gamma.expect("Expected fixed gamma");
-    assert!((gamma - 1.8).abs() < 1e-4, "Expected gamma 1.8, got {}", gamma);
+    assert!(
+        (gamma - 1.8).abs() < 1e-4,
+        "Expected gamma 1.8, got {}",
+        gamma
+    );
     let icc_data = profile.icc_profile.as_ref().expect("Expected ICC data");
     assert!(!icc_data.is_empty());
 }

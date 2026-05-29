@@ -6,7 +6,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! asefile = { version = "0.3", features = ["utils"] }
+//! ah-asefile = { version = "0.4", features = ["utils"] }
 //! ```
 
 use image::RgbaImage;
@@ -101,12 +101,12 @@ impl PaletteMapper {
 /// # Example
 ///
 /// ```
-/// # use asefile::AsepriteFile;
+/// # use ah_asefile::AsepriteFile;
 /// # use std::path::Path;
 /// # let asefile_path = Path::new("./tests/data/util_indexed.aseprite");
 /// # let output_dir = Path::new("./tests/data");
 /// # let ase = AsepriteFile::read_file(&asefile_path).unwrap();
-/// use asefile::util::{PaletteMapper, MappingOptions, to_indexed_image};
+/// use ah_asefile::util::{PaletteMapper, MappingOptions, to_indexed_image};
 /// let img = ase.frame(0).image();
 /// assert!(ase.is_indexed_color());
 /// let mapper = PaletteMapper::new(

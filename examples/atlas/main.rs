@@ -8,7 +8,7 @@
 // The rect packer tells us where to place each image and then we must create
 // the final texture ourselves.
 //
-use asefile::AsepriteFile;
+use ah_asefile::AsepriteFile;
 use image::{ImageFormat, RgbaImage};
 use rect_packer::{Config, Packer, Rect};
 use std::path::Path;

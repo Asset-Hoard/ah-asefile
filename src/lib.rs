@@ -13,7 +13,7 @@ We recommend that you override the optimization settings for this dependency
 in dev mode by adding the following to your `Cargo.toml`:
 
 ```text
-[profile.dev.package.asefile]
+[profile.dev.package.ah-asefile]
 opt-level = 2  # or 3
 ```
 
@@ -30,7 +30,7 @@ This is not necessary if you already have a wildcard override. See
 The easiest way is to use [AsepriteFile::read_file] to load a file.
 
 ```
-use asefile::AsepriteFile;
+use ah_asefile::AsepriteFile;
 # use std::path::Path;
 # let path = Path::new("./tests/data/basic-16x16.aseprite");
 let ase = AsepriteFile::read_file(&path).unwrap();
@@ -47,7 +47,7 @@ image. You can do this by using [Frame::image]. This will return an
 `image::RgbaImage` from the [image](https://docs.rs/image) library.
 
 ```
-# use asefile::AsepriteFile;
+# use ah_asefile::AsepriteFile;
 # use std::path::Path;
 # let asefile_path = Path::new("./tests/data/basic-16x16.aseprite");
 # let output_dir = Path::new("./tests/data");
@@ -64,7 +64,7 @@ This blends together all visible layers the same way Aseprite would.
 You can access a [Layer] by name or by ID.
 
 ```
-# use asefile::AsepriteFile;
+# use ah_asefile::AsepriteFile;
 # use std::path::Path;
 # let path = Path::new("./tests/data/basic-16x16.aseprite");
 # let ase = AsepriteFile::read_file(&path).unwrap();
@@ -80,7 +80,7 @@ A cel is the intersection of a frame and a layer. Because of this there are
 multiple ways to access a cel:
 
 ```
-# use asefile::AsepriteFile;
+# use ah_asefile::AsepriteFile;
 # use std::path::Path;
 # let path = Path::new("./tests/data/layers_and_tags.aseprite");
 # let ase = AsepriteFile::read_file(&path).unwrap();
@@ -102,7 +102,7 @@ You access each tile separately, or export them all as one image which is one
 tile wide.
 
 ```
-# use asefile::AsepriteFile;
+# use ah_asefile::AsepriteFile;
 # use std::path::Path;
 # use image::RgbaImage;
 # let path = Path::new("./tests/data/tileset.aseprite");
@@ -133,7 +133,7 @@ You can export those layers as a single large image or you can do some custom
 processing by looking at the tile indexes in the layer.
 
 ```
-# use asefile::AsepriteFile;
+# use ah_asefile::AsepriteFile;
 # use std::path::Path;
 # use image::RgbaImage;
 # let path = Path::new("./tests/data/tilemap_multi.aseprite");
