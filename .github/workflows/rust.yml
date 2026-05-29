@@ -2,27 +2,29 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Check formatting
-      run: cargo fmt --check
-    - name: Build
-      run: cargo build --all-features --verbose
-    - name: Run tests
-      run: cargo test --all-features --verbose
-    - name: Run clippy
-      run: cargo clippy --all-features -- -D warnings
-    - name: Test with image 0.24
-      run: cargo update -p image --precise 0.24.9 && cargo test --all-features --verbose
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: Check formatting
+        run: cargo fmt --check
+      - name: Build
+        run: cargo build --all-features --verbose
+      - name: Run tests
+        run: cargo test --all-features --verbose
+      - name: Run clippy
+        run: cargo clippy --all-features -- -D warnings
+      - name: Test with image 0.24
+        run: cargo update -p image --precise 0.24.9 && cargo test --all-features --verbose
