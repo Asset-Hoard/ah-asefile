@@ -1,49 +1,74 @@
-# asefile
+# ah-asefile
 
-[![Build status](https://github.com/alpine-alpaca/asefile/actions/workflows/rust.yml/badge.svg)](https://github.com/alpine-alpaca/asefile/actions/)
-[![crates.io](https://img.shields.io/crates/v/asefile.svg)](https://crates.io/crates/asefile)
-[![Documentation](https://docs.rs/asefile/badge.svg)](https://docs.rs/asefile)
-<!-- [![Build Status](https://github.com/alpine-alpaca/asefile/workflows/Rust%20CI/badge.svg)](https://github.com/alpine-alpaca/asefile/actions) -->
+[![Build status](https://github.com/Asset-Hoard/ah-asefile/actions/workflows/rust.yml/badge.svg)](https://github.com/Asset-Hoard/ah-asefile/actions/)
+[![crates.io](https://img.shields.io/crates/v/ah-asefile.svg)](https://crates.io/crates/ah-asefile)
+[![Documentation](https://docs.rs/ah-asefile/badge.svg)](https://docs.rs/ah-asefile)
 
-Utilities for loading [Aseprite](https://www.aseprite.org/) files. This library
-diretly reads the binary Aseprite files ([specification][spec]) and does not
-require you to export files to JSON. This should make it fast enough to load
-your assets when the game boots up (during development). You can also use it to
-build your own asset pipelines.
+Load [Aseprite](https://www.aseprite.org/) files directly from their binary format — no JSON export step required. Fast enough to load assets at game boot or wire into an asset pipeline.
 
-[Documentation](https://docs.rs/asefile/) | [Changelog](CHANGELOG.md)
+Fork of [`alpine-alpaca/asefile`](https://github.com/alpine-alpaca/asefile), maintained here because upstream is inactive. Adds gamma/ICC color profile support and updated dependencies.
 
-[spec]: https://github.com/aseprite/aseprite/blob/master/docs/ase-file-specs.md
+## Install
 
-# Example
+```toml
+[dependencies]
+ah-asefile = "0.4"
+```
+
+For acceptable dev-mode performance, override the opt-level:
+
+```toml
+[profile.dev.package.ah-asefile]
+opt-level = 2
+```
+
+## Examples
+
+**Load a file:**
 
 ```rust
-use std::path::Path;
+use ah_asefile::AsepriteFile;
 
-use asefile::AsepriteFile;
-use image::{self, ImageFormat};
+let ase = AsepriteFile::read_file("sprite.aseprite")?;
+println!("{}x{}, {} frames", ase.width(), ase.height(), ase.num_frames());
+```
 
-fn main() {
-    let file = Path::new("input.aseprite");
-    // Read file into memory
-    let ase = AsepriteFile::read_file(&file).unwrap();
-    // Write one output image for each frame in the Aseprite file.
-    for frame in 0..ase.num_frames() {
-        let output = format!("output_{}.png", frame);
-        // Create image in memory, then write it to disk as PNG.
-        let img = ase.frame(frame).image();
-        img.save_with_format(output, ImageFormat::Png).unwrap();
-    }
+**Export each frame as PNG:**
+
+```rust
+use ah_asefile::AsepriteFile;
+use image::ImageFormat;
+
+let ase = AsepriteFile::read_file("sprite.aseprite")?;
+for frame in 0..ase.num_frames() {
+    ase.frame(frame)
+        .image()
+        .save_with_format(format!("frame_{frame}.png"), ImageFormat::Png)?;
 }
 ```
 
-# Bug compatibility
+**Read a single layer:**
 
-- For indexed color files Aseprite supports blend modes, but ignores them when
-  exporting the image. The images constructed by `asefile` currently match the
-  in-editor preview.
+```rust
+let layer = ase.layer_by_name("background").unwrap();
+let img = ase.layer_image(0, layer.id());
+```
 
-- Aseprite has a bug in its luminance and color blend modes. Since this is the
-  same in editor and in exported files, `asefile` reproduces this bug. (If
-  Aseprite fixes this, `asefile` will fix this bug based on the version that
-  the file was generated with.)
+**Read tags (animations):**
+
+```rust
+for tag in ase.tags() {
+    println!("{}: frames {}..={}", tag.name(), tag.from_frame(), tag.to_frame());
+}
+```
+
+See the [API docs](https://docs.rs/ah-asefile) for slices, palettes, cels, and tilesets.
+
+## Quirks
+
+- **Indexed-color blend modes** match the in-editor preview, not Aseprite's PNG export (which ignores them).
+- **Luminance/color blend modes** reproduce an Aseprite bug — output matches the editor exactly. If upstream Aseprite fixes it, this crate will gate the fix on file version.
+
+## License
+
+MIT — see [LICENSE](LICENSE). Original copyright © alpine-alpaca; fork modifications © Mark Gandolfo.

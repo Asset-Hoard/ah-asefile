@@ -1,12 +1,12 @@
 [package]
-name = "asefile"
-version = "0.3.8"
-authors = ["alpine-alpaca <alpine.alpaca.games@gmail.com>"]
+name = "ah-asefile"
+version = "0.4.0"
+authors = ["mark@assethoard.com", "alpine-alpaca <alpine.alpaca.games@gmail.com>"]
 edition = "2021"
 license = "MIT"
-description = "Utilities for loading Aseprite files."
-homepage = "https://github.com/alpine-alpaca/asefile"
-repository = "https://github.com/alpine-alpaca/asefile"
+description = "Actively maintained fork of asefile."
+homepage = "https://github.com/Asset-Hoard/ah-asefile"
+repository = "https://github.com/Asset-Hoard/ah-asefile"
 readme = "README.md"
 keywords = ["gamedev", "aseprite", "pixel", "2D"]
 categories = [
