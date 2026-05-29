@@ -1,6 +1,6 @@
 [package]
 name = "ah-asefile"
-version = "0.4.0"
+version = "0.4.1"
 authors = ["mark@assethoard.com", "alpine-alpaca <alpine.alpaca.games@gmail.com>"]
 edition = "2021"
 license = "MIT"

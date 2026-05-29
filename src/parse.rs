@@ -115,7 +115,7 @@ impl ParseInfo {
                 })?;
                 layer.user_data = Some(user_data);
             }
-            UserDataContext::OldPalette => {
+            UserDataContext::Palette => {
                 self.sprite_user_data = Some(user_data);
             }
             UserDataContext::TagIndex(tag_index) => {
@@ -303,6 +303,12 @@ fn parse_frame<R: Read>(
                 parse_info.color_profile = Some(profile);
             }
             ChunkType::Palette => {
+                // A palette chunk precedes the sprite UserData chunk.
+                // Aseprite 1.3.5+ uses this newer palette chunk (0x2019) when the
+                // palette contains alpha data; update the chunk context so any
+                // following UserData chunk attaches to the sprite.
+                parse_info.user_data_context = Some(UserDataContext::Palette);
+
                 let palette = palette::parse_chunk(&data)?;
                 parse_info.palette = Some(Arc::new(palette));
             }
@@ -339,7 +345,7 @@ fn parse_frame<R: Read>(
             ChunkType::OldPalette04 => {
                 // An old palette chunk precedes the sprite UserData chunk.
                 // Update the chunk context to reflect the OldPalette chunk.
-                parse_info.user_data_context = Some(UserDataContext::OldPalette);
+                parse_info.user_data_context = Some(UserDataContext::Palette);
 
                 if parse_info.palette.is_none() {
                     let palette = palette::parse_old_chunk_04(&data)?;
@@ -349,7 +355,7 @@ fn parse_frame<R: Read>(
             ChunkType::OldPalette11 => {
                 // An old palette chunk precedes the sprite UserData chunk.
                 // Update the chunk context to reflect the OldPalette chunk.
-                parse_info.user_data_context = Some(UserDataContext::OldPalette);
+                parse_info.user_data_context = Some(UserDataContext::Palette);
 
                 if parse_info.palette.is_none() {
                     let palette = palette::parse_old_chunk_11(&data)?;
@@ -373,7 +379,7 @@ fn parse_frame<R: Read>(
 enum UserDataContext {
     CelId(CelId),
     LayerIndex(u32),
-    OldPalette,
+    Palette,
     TagIndex(u16),
     SliceIndex(u32),
 }

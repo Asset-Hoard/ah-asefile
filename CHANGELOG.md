@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1 - 2026-05-29
+
+- Fix parsing of sprite user data following the new palette chunk (0x2019). [#26]
+
+[#26]: https://github.com/alpine-alpaca/asefile/pull/26
+
 ## 0.4.0 - 2026-05-29
 
 - Add support for Gamma and ICC color profiles in Aseprite files.
@@ -106,5 +112,3 @@ all new features of this release.
 ## 0.2.0 - 2021-03-27
 
 First public release
-
-
